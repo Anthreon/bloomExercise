@@ -15,7 +15,7 @@
 
     <div class="customerFormWrapper">
       <div class="stepHeading">
-        <p>
+        <p class="heading">
           1. Step
           {{
             selectedCustomerEvent?.type
@@ -111,15 +111,17 @@
                       </div>
                     </ng-template>
                     <ng-template let-dropdownOption pTemplate="item">
-                      <div class="flex align-items-center gap-2 dropdown">
+                      <div
+                        class="flex align-items-center gap-2 textNumberDropdown"
+                      >
                         <div>{{ dropdownOption }}</div>
                       </div>
                     </ng-template>
 
                     <ng-template pTemplate="header">
-                      <div class="dropdown-footer">
+                      <div class="dropdownHeader">
                         <app-button
-                          text="TEXT"
+                          text="STRING"
                           textColor="
                       black
                       "
@@ -129,6 +131,7 @@
                           size="large"
                           (click)="selectStringOption()"
                         ></app-button>
+
                         <app-button
                           text="NUMBER"
                           textColor="
@@ -150,7 +153,15 @@
                       type="text"
                       pInputText
                     />
+                    <div
+                      *ngIf="pickedIntervalOrScalar.interval"
+                      class="betweenContainer"
+                    >
+                      <p>and</p>
+                    </div>
+
                     <input
+                      *ngIf="pickedIntervalOrScalar.interval"
                       type="text"
                       pInputText
                       formControlName="eventNumberSecondField"

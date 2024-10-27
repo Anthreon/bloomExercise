@@ -61,11 +61,12 @@ hr {
 .formStepsWrapper {
   display: flex;
   gap: 20px;
+  flex-wrap: wrap;
 }
 
 .wholeForm {
   display: flex;
-
+  flex-wrap: wrap;
   align-items: center; /* Aligns items vertically in the center */
   padding: 12px;
   padding-top: 0px;
@@ -73,14 +74,15 @@ hr {
 
 .dropdowns {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: self-end;
 }
 
 .inputs {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
-  margin-top: 10px;
 }
 
 .dropdowns .p-dropdown {
@@ -103,6 +105,7 @@ hr {
 
 .flexDiv {
   display: flex;
+  flex-wrap: wrap;
   gap: 20px;
   align-items: self-end;
 }
@@ -110,4 +113,25 @@ hr {
 .stepHeading {
   padding: 12px;
   padding-bottom: 0px;
+}
+
+.textNumberDropdown {
+  min-width: 20vw;
+}
+
+.dropdownHeader {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.betweenContainer {
+  display: flex;
+  margin: 0 20px;
+  flex-wrap: wrap;
+}
+
+.heading {
+  margin: 0;
+  margin-bottom: 12px;
 }
