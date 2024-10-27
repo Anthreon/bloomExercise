@@ -118,20 +118,15 @@ export class CustomerFiltersScreenComponent implements OnInit {
     return this.form.get('dynamicForms') as FormArray;
   }
 
+  get eventAttributes(): FormArray {
+    return this.form.get('eventAttributes') as FormArray;
+  }
+
   initializeForm() {
     this.form = this.formBuilder.group({
       eventFormID: new FormControl<number>(1),
       eventType: new FormControl<string>(''),
-      eventAttribute: this.formBuilder.group({
-        eventAttributeName: new FormControl<string>(''),
-        eventAttributeStringOrNumber: this.formBuilder.group({
-          eventStringValue: new FormControl<string>(''),
-          eventNumberValue: this.formBuilder.group({
-            eventNumberFirstField: new FormControl<string>(''),
-            eventNumberSecondField: new FormControl<string>(''),
-          }),
-        }),
-      }),
+      eventAttributes: this.formBuilder.array([this.createEventAttribute()]), // Use FormArray
     });
   }
 
@@ -163,7 +158,6 @@ export class CustomerFiltersScreenComponent implements OnInit {
   addEventAttribute() {
     this.attributeButtonPressed = true;
     console.log(this.selectedEvent?.properties);
-
     this.displayRefine = true;
     //here show refine more
 
@@ -186,7 +180,23 @@ export class CustomerFiltersScreenComponent implements OnInit {
     (this.form.get('eventAttributes') as FormArray).removeAt(index);
   }
 
-  addNewEventAttributeSection() {}
+  addNewEventAttributeSection() {
+    const eventAttributes = this.form.get('eventAttributes') as FormArray;
+    eventAttributes.push(this.createEventAttribute());
+  }
+
+  createEventAttribute(): FormGroup {
+    return this.formBuilder.group({
+      eventAttributeName: new FormControl<string>(''),
+      eventAttributeStringOrNumber: this.formBuilder.group({
+        eventStringValue: new FormControl<string>(''),
+        eventNumberValue: this.formBuilder.group({
+          eventNumberFirstField: new FormControl<string>(''),
+          eventNumberSecondField: new FormControl<string>(''),
+        }),
+      }),
+    });
+  }
 
   onSubmit(): void {
     console.log(this.form.value);

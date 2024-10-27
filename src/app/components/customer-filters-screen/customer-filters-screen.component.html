@@ -64,109 +64,117 @@
                 (clickAction)="addEventAttribute()"
               ></app-button>
 
-              <div class="flexDiv" formGroupName="eventAttribute">
-                <p-dropdown
-                  *ngIf="attributeButtonPressed"
-                  formControlName="eventAttributeName"
-                  [options]="selectedEvent?.properties"
-                  optionLabel="name"
-                  [filter]="true"
-                  filterBy="property"
-                  [showClear]="true"
-                  placeholder="Select an Attribute"
-                  filterPlaceholder="Filter attributes..."
-                  (onChange)="onAttributeTypeChange($event)"
-                >
-                  <ng-template pTemplate="selectedItem" let-selectedOption>
-                    <div class="flex align-items-center gap-2">
-                      <div>{{ selectedOption.property }}</div>
-                    </div>
-                  </ng-template>
-                  <ng-template let-attribute pTemplate="item">
-                    <div class="flex align-items-center gap-2 dropdown">
-                      <div>{{ attribute.property }}</div>
-                    </div>
-                  </ng-template>
-                </p-dropdown>
-
+              <div class="flexDiv" formArrayName="eventAttributes">
                 <div
-                  *ngIf="attributeButtonSelected"
-                  class="flexDiv"
-                  formGroupName="eventAttributeStringOrNumber"
+                  *ngFor="
+                    let oneOfEventAttributes of eventAttributes.controls;
+                    let i = index
+                  "
+                  [formGroupName]="i"
                 >
                   <p-dropdown
-                    formControlName="eventStringValue"
-                    [options]="
-                      currentlyPickedOptionForNumberOrString.number === true
-                        ? formNumberOptions.options
-                        : formStringOptions.options
-                    "
+                    *ngIf="attributeButtonPressed"
+                    formControlName="eventAttributeName"
+                    [options]="selectedEvent?.properties"
                     optionLabel="name"
+                    [filter]="true"
+                    filterBy="property"
                     [showClear]="true"
-                    [placeholder]="formNumberOptions.options[0]"
+                    placeholder="Select an Attribute"
+                    filterPlaceholder="Filter attributes..."
                     (onChange)="onAttributeTypeChange($event)"
                   >
                     <ng-template pTemplate="selectedItem" let-selectedOption>
                       <div class="flex align-items-center gap-2">
-                        <div>{{ selectedOption }}</div>
+                        <div>{{ selectedOption.property }}</div>
                       </div>
                     </ng-template>
-                    <ng-template let-dropdownOption pTemplate="item">
-                      <div
-                        class="flex align-items-center gap-2 textNumberDropdown"
-                      >
-                        <div>{{ dropdownOption }}</div>
-                      </div>
-                    </ng-template>
-
-                    <ng-template pTemplate="header">
-                      <div class="dropdownHeader">
-                        <app-button
-                          text="STRING"
-                          textColor="
-                      black
-                      "
-                          backgroundColor="
-                      white
-                      "
-                          size="large"
-                          (click)="selectStringOption()"
-                        ></app-button>
-
-                        <app-button
-                          text="NUMBER"
-                          textColor="
-                      black
-                      "
-                          backgroundColor="
-                      white
-                      "
-                          size="large"
-                          (click)="selectNumberOption()"
-                        ></app-button>
+                    <ng-template let-attribute pTemplate="item">
+                      <div class="flex align-items-center gap-2 dropdown">
+                        <div>{{ attribute.property }}</div>
                       </div>
                     </ng-template>
                   </p-dropdown>
 
-                  <div class="inputs" formGroupName="eventNumberValue">
-                    <input
-                      formControlName="eventNumberFirstField"
-                      type="text"
-                      pInputText
-                    />
-                    <div
-                      *ngIf="pickedIntervalOrScalar.interval"
-                      class="betweenContainer"
+                  <div
+                    *ngIf="attributeButtonSelected"
+                    class="flexDiv"
+                    formGroupName="eventAttributeStringOrNumber"
+                  >
+                    <p-dropdown
+                      formControlName="eventStringValue"
+                      [options]="
+                        currentlyPickedOptionForNumberOrString.number === true
+                          ? formNumberOptions.options
+                          : formStringOptions.options
+                      "
+                      optionLabel="name"
+                      [showClear]="true"
+                      [placeholder]="formNumberOptions.options[0]"
+                      (onChange)="onAttributeTypeChange($event)"
                     >
-                      <p>and</p>
-                    </div>
+                      <ng-template pTemplate="selectedItem" let-selectedOption>
+                        <div class="flex align-items-center gap-2">
+                          <div>{{ selectedOption }}</div>
+                        </div>
+                      </ng-template>
+                      <ng-template let-dropdownOption pTemplate="item">
+                        <div
+                          class="flex align-items-center gap-2 textNumberDropdown"
+                        >
+                          <div>{{ dropdownOption }}</div>
+                        </div>
+                      </ng-template>
 
-                    <input
-                      *ngIf="pickedIntervalOrScalar.interval"
-                      type="text"
-                      pInputText
-                      formControlName="eventNumberSecondField"
-                    />
+                      <ng-template pTemplate="header">
+                        <div class="dropdownHeader">
+                          <app-button
+                            text="STRING"
+                            textColor="
+                      black
+                      "
+                            backgroundColor="
+                      white
+                      "
+                            size="large"
+                            (click)="selectStringOption()"
+                          ></app-button>
+
+                          <app-button
+                            text="NUMBER"
+                            textColor="
+                      black
+                      "
+                            backgroundColor="
+                      white
+                      "
+                            size="large"
+                            (click)="selectNumberOption()"
+                          ></app-button>
+                        </div>
+                      </ng-template>
+                    </p-dropdown>
+
+                    <div class="inputs" formGroupName="eventNumberValue">
+                      <input
+                        formControlName="eventNumberFirstField"
+                        type="text"
+                        pInputText
+                      />
+                      <div
+                        *ngIf="pickedIntervalOrScalar.interval"
+                        class="betweenContainer"
+                      >
+                        <p>and</p>
+                      </div>
+
+                      <input
+                        *ngIf="pickedIntervalOrScalar.interval"
+                        type="text"
+                        pInputText
+                        formControlName="eventNumberSecondField"
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
