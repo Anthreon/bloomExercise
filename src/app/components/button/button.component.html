@@ -1,0 +1,13 @@
+<button
+  [ngStyle]="{
+    color: textColor,
+    backgroundColor: backgroundColor,
+  }"
+  [ngClass]="buttonSize"
+  (click)="onClick()"
+>
+  <ng-container *ngIf="icon">
+    <i [class]="icon"></i>
+  </ng-container>
+  {{ text }}
+</button>

@@ -1,0 +1,126 @@
+<div class="wrapper">
+  <div class="content">
+    <div class="headerWrapper">
+      <h3>CUSTOMER FILTER</h3>
+      <app-button
+        class="discardButton"
+        text="Discard filters"
+        textColor="#d932bc"
+        backgroundColor="none"
+        size="large"
+        icon="fa fa-check"
+        (clickAction)="discardFilters()"
+      ></app-button>
+    </div>
+
+    <div class="customerFormWrapper">
+      <form [formGroup]="form">
+        <label
+          >1. Step
+          {{
+            selectedCustomerEvent?.type
+              ? selectedCustomerEvent?.type
+              : "Unnamed step"
+          }}</label
+        >
+        <div class="formStepsWrapper">
+          <p-dropdown
+            formControlName="eventType"
+            [(ngModel)]="selectedCustomerEvent"
+            [options]="customerEvents?.events"
+            optionLabel="naame"
+            [filter]="true"
+            filterBy="type"
+            [showClear]="true"
+            placeholder="Select an Event"
+            filterPlaceholder="Filter events..."
+            (onChange)="onEventTypeChange($event)"
+          >
+            <ng-template pTemplate="selectedItem" let-selectedOption>
+              <div class="flex align-items-center gap-2">
+                <div>{{ selectedOption.type }}</div>
+              </div>
+            </ng-template>
+            <ng-template let-event pTemplate="item">
+              <div class="flex align-items-center gap-2 dropdown">
+                <div>{{ event.type }}</div>
+              </div>
+            </ng-template>
+          </p-dropdown>
+
+          <div>
+            <app-button
+              *ngIf="selectedCustomerEvent && !attributeButtonPressed"
+              text="+ Add an event attribute"
+              textColor="    #17d1cb"
+              backgroundColor="
+          white
+            "
+              size="large"
+              icon="fa fa-check"
+              (clickAction)="addEventAttribute()"
+            ></app-button>
+
+            <p-dropdown
+              *ngIf="attributeButtonPressed"
+              formControlName="eventAttribute"
+              [options]="selectedEvent?.properties"
+              optionLabel="name"
+              [filter]="true"
+              filterBy="property"
+              [showClear]="true"
+              placeholder="Select an Attribute"
+              filterPlaceholder="Filter attributes..."
+              (onChange)="onAttributeTypeChange($event)"
+            >
+              <ng-template pTemplate="selectedItem" let-selectedOption>
+                <div class="flex align-items-center gap-2">
+                  <div>{{ selectedOption.property }}</div>
+                </div>
+              </ng-template>
+              <ng-template let-attribute pTemplate="item">
+                <div class="flex align-items-center gap-2 dropdown">
+                  <div>{{ attribute.property }}</div>
+                </div>
+              </ng-template>
+            </p-dropdown>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div class="addStepWrapper">
+      <hr />
+      <div class="funnelButton">
+        <div>
+          <app-button
+            text="+ ADD FUNNEL STEP"
+            textColor="
+            #17d1cb
+            "
+            backgroundColor="
+            white
+            "
+            size="large"
+            icon="fa fa-check"
+            (clickAction)="applyFilters()"
+          ></app-button>
+        </div>
+      </div>
+    </div>
+    <div class="filtersButtonWrapper">
+      <app-button
+        text="Apply filters"
+        textColor="black"
+        backgroundColor="
+        #e3ce29
+        "
+        size="large"
+        icon="fa fa-check"
+        (clickAction)="applyFilters()"
+      ></app-button>
+    </div>
+  </div>
+</div>
+
+<!-- HERE IS TEST UNDER IT -->
