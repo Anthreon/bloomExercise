@@ -14,142 +14,148 @@
     </div>
 
     <div class="customerFormWrapper">
-      <form [formGroup]="form">
-        <label
-          >1. Step
+      <div class="stepHeading">
+        <p>
+          1. Step
           {{
             selectedCustomerEvent?.type
               ? selectedCustomerEvent?.type
               : "Unnamed step"
-          }}</label
-        >
-        <div class="formStepsWrapper">
-          <p-dropdown
-            formControlName="eventType"
-            [(ngModel)]="selectedCustomerEvent"
-            [options]="customerEvents?.events"
-            optionLabel="name"
-            [filter]="true"
-            filterBy="type"
-            [showClear]="true"
-            placeholder="Select an Event"
-            filterPlaceholder="Filter events..."
-            (onChange)="onEventTypeChange($event)"
-          >
-            <ng-template pTemplate="selectedItem" let-selectedOption>
-              <div class="flex align-items-center gap-2">
-                <div>{{ selectedOption.type }}</div>
-              </div>
-            </ng-template>
-            <ng-template let-event pTemplate="item">
-              <div class="flex align-items-center gap-2 dropdown">
-                <div>{{ event.type }}</div>
-              </div>
-            </ng-template>
-          </p-dropdown>
+          }}
+        </p>
+      </div>
+      <form [formGroup]="form">
+        <div class="wholeForm">
+          <div class="formStepsWrapper dropdowns">
+            <p-dropdown
+              formControlName="eventType"
+              [(ngModel)]="selectedCustomerEvent"
+              [options]="customerEvents?.events"
+              optionLabel="name"
+              [filter]="true"
+              filterBy="type"
+              [showClear]="true"
+              placeholder="Select an Event"
+              filterPlaceholder="Filter events..."
+              (onChange)="onEventTypeChange($event)"
+            >
+              <ng-template pTemplate="selectedItem" let-selectedOption>
+                <div class="flex align-items-center gap-2">
+                  <div>{{ selectedOption.type }}</div>
+                </div>
+              </ng-template>
+              <ng-template let-event pTemplate="item">
+                <div class="flex align-items-center gap-2 dropdown">
+                  <div>{{ event.type }}</div>
+                </div>
+              </ng-template>
+            </p-dropdown>
 
-          <div>
-            <app-button
-              *ngIf="selectedCustomerEvent && !attributeButtonPressed"
-              text="+ Add an event attribute"
-              textColor="    #17d1cb"
-              backgroundColor="
+            <div class="flexDiv">
+              <app-button
+                *ngIf="selectedCustomerEvent && !attributeButtonPressed"
+                text="+ Add an event attribute"
+                textColor="    #17d1cb"
+                backgroundColor="
           white
             "
-              size="large"
-              icon="fa fa-check"
-              (clickAction)="addEventAttribute()"
-            ></app-button>
+                size="large"
+                icon="fa fa-check"
+                (clickAction)="addEventAttribute()"
+              ></app-button>
 
-            <div formGroupName="eventAttribute">
-              <p-dropdown
-                *ngIf="attributeButtonPressed"
-                formControlName="eventAttributeName"
-                [options]="selectedEvent?.properties"
-                optionLabel="name"
-                [filter]="true"
-                filterBy="property"
-                [showClear]="true"
-                placeholder="Select an Attribute"
-                filterPlaceholder="Filter attributes..."
-                (onChange)="onAttributeTypeChange($event)"
-              >
-                <ng-template pTemplate="selectedItem" let-selectedOption>
-                  <div class="flex align-items-center gap-2">
-                    <div>{{ selectedOption.property }}</div>
-                  </div>
-                </ng-template>
-                <ng-template let-attribute pTemplate="item">
-                  <div class="flex align-items-center gap-2 dropdown">
-                    <div>{{ attribute.property }}</div>
-                  </div>
-                </ng-template>
-              </p-dropdown>
-
-              <div formGroupName="eventAttributeStringOrNumber">
+              <div class="flexDiv" formGroupName="eventAttribute">
                 <p-dropdown
-                  formControlName="eventStringValue"
-                  [options]="
-                    currentlyPickedOptionForNumberOrString.number === true
-                      ? formNumberOptions.options
-                      : formStringOptions.options
-                  "
+                  *ngIf="attributeButtonPressed"
+                  formControlName="eventAttributeName"
+                  [options]="selectedEvent?.properties"
                   optionLabel="name"
+                  [filter]="true"
+                  filterBy="property"
                   [showClear]="true"
-                  [placeholder]="formNumberOptions.options[0]"
+                  placeholder="Select an Attribute"
+                  filterPlaceholder="Filter attributes..."
                   (onChange)="onAttributeTypeChange($event)"
                 >
                   <ng-template pTemplate="selectedItem" let-selectedOption>
                     <div class="flex align-items-center gap-2">
-                      <div>{{ selectedOption }}</div>
+                      <div>{{ selectedOption.property }}</div>
                     </div>
                   </ng-template>
-                  <ng-template let-dropdownOption pTemplate="item">
+                  <ng-template let-attribute pTemplate="item">
                     <div class="flex align-items-center gap-2 dropdown">
-                      <div>{{ dropdownOption }}</div>
-                    </div>
-                  </ng-template>
-
-                  <ng-template pTemplate="header">
-                    <div class="dropdown-footer">
-                      <app-button
-                        text="TEXT"
-                        textColor="
-                      black
-                      "
-                        backgroundColor="
-                      white
-                      "
-                        size="large"
-                        (click)="selectStringOption()"
-                      ></app-button>
-                      <app-button
-                        text="NUMBER"
-                        textColor="
-                      black
-                      "
-                        backgroundColor="
-                      white
-                      "
-                        size="large"
-                        (click)="selectNumberOption()"
-                      ></app-button>
+                      <div>{{ attribute.property }}</div>
                     </div>
                   </ng-template>
                 </p-dropdown>
 
-                <div formGroupName="eventNumberValue">
-                  <input
-                    formControlName="eventNumberFirstField"
-                    type="text"
-                    pInputText
-                  />
-                  <input
-                    *ngIf="pickedIntervalOrScalar.interval"
-                    type="text"
-                    pInputText
-                    formControlName="eventNumberSecondField"
-                  />
+                <div
+                  class="flexDiv"
+                  formGroupName="eventAttributeStringOrNumber"
+                >
+                  <p-dropdown
+                    formControlName="eventStringValue"
+                    [options]="
+                      currentlyPickedOptionForNumberOrString.number === true
+                        ? formNumberOptions.options
+                        : formStringOptions.options
+                    "
+                    optionLabel="name"
+                    [showClear]="true"
+                    [placeholder]="formNumberOptions.options[0]"
+                    (onChange)="onAttributeTypeChange($event)"
+                  >
+                    <ng-template pTemplate="selectedItem" let-selectedOption>
+                      <div class="flex align-items-center gap-2">
+                        <div>{{ selectedOption }}</div>
+                      </div>
+                    </ng-template>
+                    <ng-template let-dropdownOption pTemplate="item">
+                      <div class="flex align-items-center gap-2 dropdown">
+                        <div>{{ dropdownOption }}</div>
+                      </div>
+                    </ng-template>
+
+                    <ng-template pTemplate="header">
+                      <div class="dropdown-footer">
+                        <app-button
+                          text="TEXT"
+                          textColor="
+                      black
+                      "
+                          backgroundColor="
+                      white
+                      "
+                          size="large"
+                          (click)="selectStringOption()"
+                        ></app-button>
+                        <app-button
+                          text="NUMBER"
+                          textColor="
+                      black
+                      "
+                          backgroundColor="
+                      white
+                      "
+                          size="large"
+                          (click)="selectNumberOption()"
+                        ></app-button>
+                      </div>
+                    </ng-template>
+                  </p-dropdown>
+
+                  <div class="inputs" formGroupName="eventNumberValue">
+                    <input
+                      formControlName="eventNumberFirstField"
+                      type="text"
+                      pInputText
+                    />
+                    <input
+                      type="text"
+                      pInputText
+                      formControlName="eventNumberSecondField"
+                    />
+                  </div>
                 </div>
               </div>
             </div>

@@ -60,4 +60,54 @@ hr {
 
 .formStepsWrapper {
   display: flex;
+  gap: 20px;
+}
+
+.wholeForm {
+  display: flex;
+
+  align-items: center; /* Aligns items vertically in the center */
+  padding: 12px;
+  padding-top: 0px;
+}
+
+.dropdowns {
+  display: flex;
+  justify-content: space-between;
+  align-items: self-end;
+}
+
+.inputs {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.dropdowns .p-dropdown {
+  flex: 1;
+  margin-right: 10px;
+}
+
+.dropdowns .p-dropdown:last-child {
+  margin-right: 0;
+}
+
+.inputs input {
+  flex: 1;
+  margin-right: 10px;
+}
+
+.inputs input:last-child {
+  margin-right: 0;
+}
+
+.flexDiv {
+  display: flex;
+  gap: 20px;
+  align-items: self-end;
+}
+
+.stepHeading {
+  padding: 12px;
+  padding-bottom: 0px;
 }
