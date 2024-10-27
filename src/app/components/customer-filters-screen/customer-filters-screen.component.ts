@@ -11,6 +11,8 @@ import { FormArray, FormControl, FormsModule } from '@angular/forms';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { InputTextModule } from 'primeng/inputtext';
+import { Subject, takeUntil } from 'rxjs';
 
 interface Property {
   property: string;
@@ -32,6 +34,7 @@ interface SelectedEvent {
     FormsModule,
     ReactiveFormsModule,
     CommonModule,
+    InputTextModule,
   ],
   templateUrl: './customer-filters-screen.component.html',
   styleUrl: './customer-filters-screen.component.scss',
@@ -42,7 +45,40 @@ export class CustomerFiltersScreenComponent implements OnInit {
   public selectedCustomerEvent: EventTypes | null = null;
   public selectedEvent: SelectedEvent | null = null;
 
+  private unsubscribe$ = new Subject<void>();
+
   public attributeButtonPressed: boolean = false;
+
+  public attributeButtonSelected: boolean = false;
+
+  public formNumberOptions = {
+    options: ['equals to', 'in between', 'less than', 'greater than'],
+  };
+
+  public formStringOptions = {
+    options: ['equals', 'does not equal', 'contains', 'does not contain'],
+  };
+
+  public allOptions = {
+    'equals to': 'equals to',
+    'in between': 'in between',
+    'less than': 'less than',
+    'greater than': 'greater than',
+    equals: 'equals',
+    'does not equal': 'does not equal',
+    contains: 'contains',
+    'does not contain': 'does not contain',
+  };
+
+  public currentlyPickedOptionForNumberOrString = {
+    number: true,
+    string: false,
+  };
+
+  public pickedIntervalOrScalar = {
+    scalar: true,
+    interval: false,
+  };
 
   form: FormGroup;
   eventTypes: string[] = [];
@@ -50,18 +86,6 @@ export class CustomerFiltersScreenComponent implements OnInit {
   selectedPropertyType: string = '';
   selectedOperator: string = '';
   operatorOptions: string[] = [];
-  numberOptions: string[] = [
-    'equals to',
-    'in between',
-    'less than',
-    'greater than',
-  ];
-  stringOptions: string[] = [
-    'equals',
-    'does not equal',
-    'contains',
-    'does not contain',
-  ];
 
   constructor(
     private apiService: ApiService,
@@ -74,8 +98,14 @@ export class CustomerFiltersScreenComponent implements OnInit {
 
   public ngOnInit(): void {
     this.initializeForm();
+    this.form.valueChanges
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((newFormValue) => {
+        console.log('Form data: ', newFormValue);
+      });
     this.apiService
       .getCustomerEvents()
+      .pipe(takeUntil(this.unsubscribe$))
       .subscribe((customerEvents: CustomerEventsDataStructure) => {
         console.log(customerEvents.events);
         this.customerEvents = customerEvents;
@@ -88,20 +118,33 @@ export class CustomerFiltersScreenComponent implements OnInit {
 
   initializeForm() {
     this.form = this.formBuilder.group({
+      eventFormID: new FormControl<number>(1),
       eventType: new FormControl<string>(''),
-      eventAttributes: this.formBuilder.array([this.createEventAttribute()]),
+      eventAttribute: this.formBuilder.group({
+        eventAttributeName: new FormControl<string>(''),
+        eventAttributeStringOrNumber: this.formBuilder.group({
+          eventStringValue: new FormControl<string>(''),
+          eventNumberValue: this.formBuilder.group({
+            eventNumberFirstField: new FormControl<string>(''),
+            eventNumberSecondField: new FormControl<string>(''),
+          }),
+        }),
+      }),
     });
   }
 
-  // Method to create a FormGroup for each eventAttribute
-  createEventAttribute(): FormGroup {
-    return this.formBuilder.group({
-      eventAttribute: new FormControl<string>(''),
-      eventAttributeType: new FormControl<string>(''),
-      operator: new FormControl(''),
-      value: new FormControl(''),
-      rangeValue: new FormControl<[string, string]>(['', '']),
-    });
+  public selectStringOption() {
+    this.currentlyPickedOptionForNumberOrString = {
+      number: false,
+      string: true,
+    };
+  }
+
+  public selectNumberOption() {
+    this.currentlyPickedOptionForNumberOrString = {
+      number: true,
+      string: false,
+    };
   }
 
   public onEventTypeChange(event: any) {
@@ -109,14 +152,28 @@ export class CustomerFiltersScreenComponent implements OnInit {
     this.selectedEvent = event.value;
   }
 
-  public onAttributeTypeChange(event: any) {}
+  public onAttributeTypeChange(event: any) {
+    console.log('Attribute event', event);
+    this.attributeButtonSelected = true;
+    this.changePickedIntervalOrScalar(event);
+  }
 
   addEventAttribute() {
     this.attributeButtonPressed = true;
     console.log(this.selectedEvent?.properties);
-    (this.form.get('eventAttributes') as FormArray).push(
-      this.createEventAttribute()
-    );
+    // (this.form.get('eventAttributes') as FormArray).push(
+    //   this.createEventAttribute()
+    // );
+  }
+
+  changePickedIntervalOrScalar(event: any) {
+    const pickedValue: string = event.value;
+    if (pickedValue === this.allOptions['in between']) {
+      this.pickedIntervalOrScalar = { interval: true, scalar: false };
+      return;
+    }
+    this.pickedIntervalOrScalar = { interval: false, scalar: true };
+    console.log(this.form);
   }
 
   removeEventAttribute(index: number) {
@@ -137,5 +194,10 @@ export class CustomerFiltersScreenComponent implements OnInit {
 
   removeFormGroup(index: number): void {
     this.dynamicForms.removeAt(index);
+  }
+
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 }
