@@ -173,6 +173,21 @@
             </div>
           </div>
         </div>
+        <div *ngIf="displayRefine" class="refineButtonWrapper">
+          <div class="refineMore">
+            <app-button
+              text="Refine more"
+              textColor="#17d1cb"
+              backgroundColor="
+    white
+      "
+              size="medium"
+              (clickAction)="addNewEventAttributeSection()"
+            ></app-button>
+          </div>
+          <div class="otherBoxes"></div>
+          <div class="otherBoxes"></div>
+        </div>
       </form>
     </div>
 

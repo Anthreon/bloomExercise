@@ -135,3 +135,16 @@ hr {
   margin: 0;
   margin-bottom: 12px;
 }
+
+.refineButtonWrapper {
+  display: flex;
+}
+
+.refineMore {
+  flex-grow: 8;
+  text-align: end;
+}
+
+.otherBoxes {
+  flex-grow: 25;
+}

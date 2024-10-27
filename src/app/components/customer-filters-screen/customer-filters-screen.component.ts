@@ -70,6 +70,8 @@ export class CustomerFiltersScreenComponent implements OnInit {
     'does not contain': 'does not contain',
   };
 
+  public displayRefine: boolean = false;
+
   public currentlyPickedOptionForNumberOrString = {
     number: true,
     string: false,
@@ -161,6 +163,10 @@ export class CustomerFiltersScreenComponent implements OnInit {
   addEventAttribute() {
     this.attributeButtonPressed = true;
     console.log(this.selectedEvent?.properties);
+
+    this.displayRefine = true;
+    //here show refine more
+
     // (this.form.get('eventAttributes') as FormArray).push(
     //   this.createEventAttribute()
     // );
@@ -179,6 +185,8 @@ export class CustomerFiltersScreenComponent implements OnInit {
   removeEventAttribute(index: number) {
     (this.form.get('eventAttributes') as FormArray).removeAt(index);
   }
+
+  addNewEventAttributeSection() {}
 
   onSubmit(): void {
     console.log(this.form.value);
