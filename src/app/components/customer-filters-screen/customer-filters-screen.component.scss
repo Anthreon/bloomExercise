@@ -104,3 +104,12 @@ hr {
   gap: 20px;
   grid-template-columns: repeat(3, 1fr);
 }
+
+.refine-more-container {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+}
+
+.refineButton {
+  grid-column: 3;
+}
