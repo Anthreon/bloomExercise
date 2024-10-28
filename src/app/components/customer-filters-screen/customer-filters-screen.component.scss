@@ -54,60 +54,14 @@ hr {
   width: 100%;
 }
 
-.dropdown {
+::ng-deep {
+  dropdown {
+    width: 400px !important;
+  }
+}
+
+.dropdownOppened {
   min-width: 40vw;
-}
-
-.formStepsWrapper {
-  display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
-}
-
-.wholeForm {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center; /* Aligns items vertically in the center */
-  padding: 12px;
-  padding-top: 0px;
-}
-
-.dropdowns {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: self-end;
-}
-
-.inputs {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-}
-
-.dropdowns .p-dropdown {
-  flex: 1;
-  margin-right: 10px;
-}
-
-.dropdowns .p-dropdown:last-child {
-  margin-right: 0;
-}
-
-.inputs input {
-  flex: 1;
-  margin-right: 10px;
-}
-
-.inputs input:last-child {
-  margin-right: 0;
-}
-
-.flexDiv {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  align-items: self-end;
 }
 
 .stepHeading {
@@ -119,32 +73,34 @@ hr {
   min-width: 20vw;
 }
 
-.dropdownHeader {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-}
-
-.betweenContainer {
-  display: flex;
-  margin: 0 20px;
-  flex-wrap: wrap;
-}
-
 .heading {
   margin: 0;
   margin-bottom: 12px;
 }
 
-.refineButtonWrapper {
-  display: flex;
+.form-container {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(6, 1fr);
+  padding-left: 12px;
 }
 
-.refineMore {
-  flex-grow: 8;
-  text-align: end;
+.inlineGrid {
+  display: grid;
+  padding-bottom: 20px;
+  gap: 20px;
+  grid-template-columns: repeat(4, 1fr);
 }
 
-.otherBoxes {
-  flex-grow: 25;
+.attributesContainer {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.gridButtons {
+  display: grid;
+  align-items: flex-start;
+  gap: 20px;
+  grid-template-columns: repeat(3, 1fr);
 }
