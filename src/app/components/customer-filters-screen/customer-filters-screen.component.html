@@ -25,9 +25,6 @@
         </p>
       </div>
       <form class="form-container" [formGroup]="form">
-        <!-- Row for main dropdowns and buttons -->
-
-        <!-- Main Event Type Dropdown -->
         <p-dropdown
           styleClass="dropdown"
           formControlName="eventType"
@@ -53,7 +50,6 @@
           </ng-template>
         </p-dropdown>
 
-        <!-- Conditional Button to Add Event Attribute -->
         <app-button
           *ngIf="selectedCustomerEvent && !attributeButtonPressed"
           text="+ Add an event attribute"
@@ -64,7 +60,6 @@
           (clickAction)="addEventAttribute()"
         ></app-button>
 
-        <!-- Event Attributes Section (Dynamically Generated) -->
         <div formArrayName="eventAttributes">
           <div
             class="inlineGrid"
@@ -74,7 +69,6 @@
             "
             [formGroupName]="i"
           >
-            <!-- Event Attribute Dropdown -->
             <p-dropdown
               *ngIf="attributeButtonPressed"
               formControlName="eventAttributeName"
@@ -99,7 +93,6 @@
               </ng-template>
             </p-dropdown>
 
-            <!-- Conditional Event String/Number Value Selection -->
             <div
               *ngIf="attributeButtonSelected"
               formGroupName="eventAttributeStringOrNumber"
@@ -149,7 +142,6 @@
                 </ng-template>
               </p-dropdown>
 
-              <!-- Input Fields for Number Values -->
               <div class="inputs gridButtons" formGroupName="eventNumberValue">
                 <input
                   formControlName="eventNumberFirstField"
@@ -173,7 +165,7 @@
           </div>
         </div>
       </form>
-      <!-- Refine More Button Positioned Below Event Parameter Dropdown -->
+
       <div *ngIf="displayRefine" class="refine-more-container">
         <app-button
           class="refineButton"

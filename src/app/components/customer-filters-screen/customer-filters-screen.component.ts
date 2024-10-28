@@ -126,7 +126,7 @@ export class CustomerFiltersScreenComponent implements OnInit {
     this.form = this.formBuilder.group({
       eventFormID: new FormControl<number>(1),
       eventType: new FormControl<string>(''),
-      eventAttributes: this.formBuilder.array([this.createEventAttribute()]), // Use FormArray
+      eventAttributes: this.formBuilder.array([this.createEventAttribute()]),
     });
   }
 
