@@ -13,6 +13,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { InputTextModule } from 'primeng/inputtext';
 import { Subject, takeUntil } from 'rxjs';
+import { ButtonModule } from 'primeng/button';
 
 interface Property {
   property: string;
@@ -35,6 +36,7 @@ interface SelectedEvent {
     ReactiveFormsModule,
     CommonModule,
     InputTextModule,
+    ButtonModule,
   ],
   templateUrl: './customer-filters-screen.component.html',
   styleUrl: './customer-filters-screen.component.scss',
@@ -159,11 +161,6 @@ export class CustomerFiltersScreenComponent implements OnInit {
     this.attributeButtonPressed = true;
     console.log(this.selectedEvent?.properties);
     this.displayRefine = true;
-    //here show refine more
-
-    // (this.form.get('eventAttributes') as FormArray).push(
-    //   this.createEventAttribute()
-    // );
   }
 
   changePickedIntervalOrScalar(event: any) {
@@ -213,6 +210,8 @@ export class CustomerFiltersScreenComponent implements OnInit {
   removeFormGroup(index: number): void {
     this.dynamicForms.removeAt(index);
   }
+
+  addFunnelStep() {}
 
   ngOnDestroy() {
     this.unsubscribe$.next();

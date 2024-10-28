@@ -47,17 +47,16 @@ hr {
   margin-top: 40px;
 }
 
+.dropdownHeader {
+  display: flex;
+  justify-content: space-around;
+}
+
 .funnelButton {
   text-align: center;
   margin-top: 20px;
   padding-bottom: 40px;
   width: 100%;
-}
-
-::ng-deep {
-  dropdown {
-    width: 400px !important;
-  }
 }
 
 .dropdownOppened {
@@ -112,4 +111,15 @@ hr {
 
 .refineButton {
   grid-column: 3;
+}
+
+.inlineGrid:hover .hover-icon {
+  display: block;
+  opacity: 1;
+}
+
+.hover-icon {
+  display: none;
+  opacity: 0;
+  transition: opacity 4ss ease, transform 4s ease;
 }

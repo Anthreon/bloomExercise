@@ -162,6 +162,14 @@
                 />
               </div>
             </div>
+
+            <p-button
+              icon="pi pi-times"
+              [rounded]="true"
+              [text]="true"
+              severity="danger"
+              class="hover-icon"
+            />
           </div>
         </div>
       </form>
@@ -192,7 +200,7 @@
             "
             size="large"
             icon="fa fa-check"
-            (clickAction)="applyFilters()"
+            (clickAction)="addFunnelStep()"
           ></app-button>
         </div>
       </div>
